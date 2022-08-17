@@ -23,31 +23,39 @@
         @endif
         <br>
         <label>Date Of Joining :</label>&nbsp&nbsp 
-        <input type="date" name="date_of_join" value="{{$user->date_of_join}}">
+        <input type="text" name="date_of_join" value="{{$user->date_of_join}}" placeholder="Y-m-d H:s:i">
         @if ($errors->has('date_of_join'))
         <span class="text-danger">{{ $errors->first('date_of_join') }}</span>
         @endif
 
         <br><br>
         <label>Date Of Leaving :</label>&nbsp&nbsp 
-        <input type="date" name="date_of_leave" value="{{$user->date_of_leave}}">
+        <input type="text" name="date_of_leave" id="date_of_leave" value="{{$user->date_of_leave}}" placeholder="Y-m-d H:s:i">
         @if ($errors->has('date_of_leave'))
         <span class="text-danger">{{ $errors->first('date_of_leave') }}</span>
         @endif
         &nbsp  &nbsp
-            <input type="checkbox" id="still_work" name="still_work"
-                   checked>
-            <label for="scales">Still Working</label>
+        
+        <input type="checkbox" id="checkbox" name="still_work" onclick="myFunction()">
+        <label for="scales">Still Working</label>
+        <script>
+        function myFunction() {
+        
+        var x=$("#checkbox").is(":checked");
+        console.log('x',x);
+
+        let result = x === true ?  document.getElementById("date_of_leave").disabled = true :  document.getElementById("date_of_leave").disabled = false;
+        }
+        </script>
     
 <br><br>
 
-        <label>Upload Image :</label>&nbsp&nbsp 
-        <input type="file" name="imagefile" class="form-control" placeholder="image">
-
-        <br><br>
+      
         <input type="submit" value="Save" class="btn btn-success"></br>
     </form>
   
   </div>
 </div>
 @stop
+<script rel="javascript" type="text/javascript" href="js/jquery-1.11.3.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

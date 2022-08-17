@@ -43,15 +43,24 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
+            'email' => 'required|email|unique:user_details',
             'name' => 'required|string|max:191',
             'date_of_join' => 'required',
+            'imagefile' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048'
+        ],[
+            'name.required' => 'Name is required',
+            'email.email' => 'Please Enter Correct Email Format',
+            'email.unique' => 'Email already exists',
+            'date_of_join.required' => 'Date of Join is Required',
+            
         ]);
 
         $user = new UserDetail;
         $user->email = $request->email;
         $user->name = $request->name;
         $user->date_of_join =  Carbon::parse($request->date_of_join)->format('Y-m-d H:s:i');
+
+        // if still_work check box is "on" date_of_leave field will be null on database or else it will store the date
         if($request->still_work == "on")
         {
             $user->date_of_leave = null;
@@ -107,6 +116,11 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'email' => 'email',
+            'name' => 'string|max:191',
+        ]);
+
         $user = UserDetail::find($id);
         $input = $request->all();
         $user->update($input);
